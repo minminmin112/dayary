@@ -19,3 +19,17 @@ insert into diary values(seq_diary_id.nextval, 'ryu', '두 번째 일기', '곧 프로젝
 commit;
 
 select * from diary;
+
+delete from diary where id = 27;
+
+
+-- member
+create table member(
+    id varchar2(10) primary key,
+    password varchar2(10) not null,
+    name varchar2(30) not null,
+    email varchar2(30) not null unique,
+    gender char(1) check(gender in('m', 'f'))
+);
+
+

@@ -1,4 +1,4 @@
-package com.inc.dayary.repositoy;
+package com.inc.dayary.repository;
 
 import java.util.List;
 

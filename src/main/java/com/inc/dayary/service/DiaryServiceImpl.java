@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.inc.dayary.domain.Diary;
-import com.inc.dayary.repositoy.DiaryDao;
+import com.inc.dayary.repository.DiaryDao;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {
