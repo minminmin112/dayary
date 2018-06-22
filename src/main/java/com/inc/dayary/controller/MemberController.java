@@ -2,6 +2,7 @@ package com.inc.dayary.controller;
 
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -87,6 +88,34 @@ public class MemberController {
 		session.setAttribute("email", email);
 		session.setAttribute("emailCode", emailCode);
 		return "success";
+	}
+
+	@GetMapping("/member/signin")
+	public String signin(Model model) {
+		model.addAttribute("member", new Member());
+		return "member/signin";
+	}
+
+	@PostMapping("/member/signin")
+	public String signin(@ModelAttribute Member member, BindingResult result, HttpServletRequest request, Model model) {
+		Member savedMember = memberService.findOne(member.getId());
+		if (savedMember == null) {
+			result.addError(new FieldError("notExsitId", "id", "존재하지 않는 아이디입니다."));
+		} else if (!savedMember.getPassword().equals(member.getPassword())) {
+			result.addError(new FieldError("passwordNotSame", "password", "비밀번호가 일치하지 않습니다."));
+		}
+		if (result.hasErrors()) {
+			return "member/signin";
+		}
+		request.getSession().invalidate();
+		request.getSession().setAttribute("member", member);
+		return "redirect:/";
+	}
+
+	@GetMapping("/member/signout")
+	public String signout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/member/signin";
 	}
 
 	private boolean emailValidator(String email) {

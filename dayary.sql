@@ -32,4 +32,9 @@ create table member(
     gender char(1) check(gender in('m', 'f'))
 );
 
+alter table diary add constraint fk_diary_u_id foreign key(u_id) references member(id);
+
+update diary set u_id = 'green' where u_id = 'min';
+
+select * from member;
 
